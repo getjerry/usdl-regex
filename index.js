@@ -1,12 +1,14 @@
 const regs = require('./regex.json');
+const { stripZeros } = require('./utils');
 
-function isValid(state, number) {
+function isValid(state, number) { 
   const key = (state || '').toUpperCase();
   if (!regs[key]) {
     throw new Error('Invalid state supplied');
   }
+
   const re = new RegExp(regs[state].rule, 'i');
-  if (re.test(number)) {
+  if (stripZeros(number) !== "" && re.test(number)) {
     return true;
   }
   return false;
